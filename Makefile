@@ -2,7 +2,7 @@ STUID = 202217257
 STUNAME = yanxi
   
 # DO NOT modify the following code!!!
-
+#merge test
 GITFLAGS = -q --author='tracer-ics2022 <tracer@njuics.org>' --no-verify --allow-empty
 
 # prototype: git_commit(msg)
