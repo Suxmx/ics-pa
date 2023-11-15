@@ -23,6 +23,8 @@ static int is_batch_mode = false;
 
 void init_regex();
 void init_wp_pool();
+word_t vaddr_read(vaddr_t addr, int len);
+uint8_t *guest_to_host(paddr_t paddr);
 
 /* We use the `readline' library to provide more flexibility to read from stdin. */
 static char *rl_gets()
@@ -70,8 +72,29 @@ static int cmd_info(char *args)
   }
   else if (strcmp(args, "w") == 0)
   {
-    
   }
+  return 0;
+}
+static int cmd_x(char *args)
+{
+  int n;
+  paddr_t addr;
+  sscanf(args, "%d %x", &n, &addr);
+  for (int i = 0; i < n; i++)
+  {
+    
+
+    word_t mem = vaddr_read(addr + i * 4, 4);
+    printf("0x%08x\t0x%08lx\n", addr + i * 4, mem);
+    printf("0x");
+    // for (int j = 3; j >= 0; j--)
+    // {
+    //   uint8_t *memptr = guest_to_host(addr+i*4 + j);
+    //   printf("%02x",*memptr);
+    // }
+    // printf("\n");
+  }
+
   return 0;
 }
 
@@ -87,8 +110,8 @@ static struct
     {"c", "Continue the execution of the program", cmd_c},
     {"q", "Exit NEMU", cmd_q},
     {"si", "Execute single step.", cmd_si},
-    {"info","Check regs or watch points.",cmd_info},
-
+    {"info", "Check regs or watch points.", cmd_info},
+    {"x", "Scan Memory", cmd_x},
     /* TODO: Add more commands */
 
 };
